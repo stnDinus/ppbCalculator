@@ -61,18 +61,14 @@ class _CalculatorState extends State<Calculator> {
   }
 }
 
-class CalculatorDisplay extends StatefulWidget {
+class CalculatorDisplay extends StatelessWidget {
   final double displayValue;
+
   const CalculatorDisplay({super.key, required this.displayValue});
 
   @override
-  State<StatefulWidget> createState() => _CalculatorDisplayState();
-}
-
-class _CalculatorDisplayState extends State<CalculatorDisplay> {
-  @override
   Widget build(BuildContext context) {
-    return Text(widget.displayValue.toString());
+    return Text(displayValue.toString());
   }
 }
 
