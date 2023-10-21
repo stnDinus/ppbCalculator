@@ -47,6 +47,7 @@ class _CalculatorState extends State<Calculator> {
                         break;
                     }
                     lhs = hasil.toString();
+                    rhs = '';
                     break;
                   case Operator.ce:
                     hasil = 0;
