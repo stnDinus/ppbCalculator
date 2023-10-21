@@ -82,7 +82,7 @@ class CalculatorDisplay extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Text(displayValue.toString());
+    return Text(displayValue.toString(), style: Theme.of(context).textTheme.displayLarge);
   }
 }
 
@@ -95,6 +95,8 @@ class CalculatorButtons extends StatelessWidget {
   Widget build(BuildContext context) {
     return GridView.count(
       crossAxisCount: 4,
+      mainAxisSpacing: 7,
+      crossAxisSpacing: 7,
       physics: const NeverScrollableScrollPhysics(),
       shrinkWrap: true,
       children: [

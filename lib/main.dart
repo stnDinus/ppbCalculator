@@ -32,7 +32,8 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: Center(child: SizedBox(width: 300, child: Calculator())),
+      home: const Scaffold(
+          body: Center(child: SizedBox(width: 300, child: Calculator()))),
     );
   }
 }
