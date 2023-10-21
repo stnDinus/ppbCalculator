@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 enum Symbol { operand, operator }
 
-enum Operator { bagi, kali, kurangi, tambah }
+enum Operator { bagi, kali, kurangi, tambah, ce }
 
 class Calculator extends StatefulWidget {
   const Calculator({super.key});
@@ -24,7 +24,14 @@ class _CalculatorState extends State<Calculator> {
         callback: (Symbol symbol, Object value) {
           switch (symbol) {
             case Symbol.operator:
-              operator = value as Operator;
+              if (value == Operator.ce) {
+                setState(() {
+                  hasil = 0;
+                  lhs = null;
+                });
+              } else {
+                operator = value as Operator;
+              }
               break;
             case Symbol.operand:
               if (lhs == null) {
@@ -150,7 +157,11 @@ class CalculatorButtons extends StatelessWidget {
             onPressed: () {
               callback(Symbol.operand, 0.0);
             }),
-        const SizedBox.shrink(),
+        CalculatorButton(
+            string: "CE",
+            onPressed: () {
+              callback(Symbol.operator, Operator.ce);
+            }),
         CalculatorButton(
             string: "+",
             onPressed: () {
