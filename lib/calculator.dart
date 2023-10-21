@@ -22,64 +22,52 @@ class _CalculatorState extends State<Calculator> {
       CalculatorDisplay(displayValue: hasil),
       CalculatorButtons(
         callback: (Symbol symbol, Object value) {
-          switch (symbol) {
-            case Symbol.operator:
-              switch (value as Operator) {
-                case Operator.eq:
-                  double lhsDouble = double.parse(lhs),
-                      rhsDouble = double.parse(rhs);
-                  // count
-                  switch (operator!) {
-                    case Operator.bagi:
-                      setState(() {
+          setState(() {
+            switch (symbol) {
+              case Symbol.operator:
+                switch (value as Operator) {
+                  case Operator.eq:
+                    double lhsDouble = double.parse(lhs),
+                        rhsDouble = double.parse(rhs);
+                    // count
+                    switch (operator!) {
+                      case Operator.bagi:
                         hasil = lhsDouble / rhsDouble;
-                      });
-                      break;
-                    case Operator.kali:
-                      setState(() {
+                        break;
+                      case Operator.kali:
                         hasil = lhsDouble * rhsDouble;
-                      });
-                      break;
-                    case Operator.kurangi:
-                      setState(() {
+                        break;
+                      case Operator.kurangi:
                         hasil = lhsDouble - rhsDouble;
-                      });
-                      break;
-                    case Operator.tambah:
-                      setState(() {
+                        break;
+                      case Operator.tambah:
                         hasil = lhsDouble + rhsDouble;
-                      });
-                      break;
-                    default:
-                      break;
-                  }
-                  lhs = hasil.toString();
-                  break;
-                case Operator.ce:
-                  setState(() {
+                        break;
+                      default:
+                        break;
+                    }
+                    lhs = hasil.toString();
+                    break;
+                  case Operator.ce:
                     hasil = 0;
                     lhs = '';
                     rhs = '';
                     operator = null;
-                  });
-                  break;
-                default:
-                  operator = value;
-                  break;
-              }
-              break;
-            case Symbol.operand:
-              if (operator == null) {
-                setState(() {
+                    break;
+                  default:
+                    operator = value;
+                    break;
+                }
+                break;
+              case Symbol.operand:
+                if (operator == null) {
                   lhs += value.toString();
-                });
-              } else {
-                setState(() {
+                } else {
                   rhs += value.toString();
-                });
-              }
-              break;
-          }
+                }
+                break;
+            }
+          });
         },
       )
     ]);
