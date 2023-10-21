@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 enum Symbol { operand, operator }
 
-enum Operator { bagi, kali, kurangi, tambah, ce }
+enum Operator { bagi, kali, kurangi, tambah, ce, eq }
 
 class Calculator extends StatefulWidget {
   const Calculator({super.key});
@@ -13,7 +13,7 @@ class Calculator extends StatefulWidget {
 
 class _CalculatorState extends State<Calculator> {
   double hasil = 0;
-  double? lhs;
+  String lhs = '', rhs = '';
   Operator? operator;
 
   @override
@@ -24,44 +24,59 @@ class _CalculatorState extends State<Calculator> {
         callback: (Symbol symbol, Object value) {
           switch (symbol) {
             case Symbol.operator:
-              if (value == Operator.ce) {
-                setState(() {
-                  hasil = 0;
-                  lhs = null;
-                });
-              } else {
-                operator = value as Operator;
+              switch (value as Operator) {
+                case Operator.eq:
+                  double lhsDouble = double.parse(lhs),
+                      rhsDouble = double.parse(rhs);
+                  // count
+                  switch (operator!) {
+                    case Operator.bagi:
+                      setState(() {
+                        hasil = lhsDouble / rhsDouble;
+                      });
+                      break;
+                    case Operator.kali:
+                      setState(() {
+                        hasil = lhsDouble * rhsDouble;
+                      });
+                      break;
+                    case Operator.kurangi:
+                      setState(() {
+                        hasil = lhsDouble - rhsDouble;
+                      });
+                      break;
+                    case Operator.tambah:
+                      setState(() {
+                        hasil = lhsDouble + rhsDouble;
+                      });
+                      break;
+                    default:
+                      break;
+                  }
+                  lhs = hasil.toString();
+                  break;
+                case Operator.ce:
+                  setState(() {
+                    hasil = 0;
+                    lhs = '';
+                    rhs = '';
+                    operator = null;
+                  });
+                  break;
+                default:
+                  operator = value;
+                  break;
               }
               break;
             case Symbol.operand:
-              if (lhs == null) {
-                lhs = value as double;
+              if (operator == null) {
+                setState(() {
+                  lhs += value.toString();
+                });
               } else {
-                switch (operator!) {
-                  case Operator.bagi:
-                    setState(() {
-                      hasil = lhs! / (value as double);
-                    });
-                    break;
-                  case Operator.kali:
-                    setState(() {
-                      hasil = lhs! * (value as double);
-                    });
-                    break;
-                  case Operator.kurangi:
-                    setState(() {
-                      hasil = lhs! - (value as double);
-                    });
-                    break;
-                  case Operator.tambah:
-                    setState(() {
-                      hasil = lhs! + (value as double);
-                    });
-                    break;
-                  default:
-                    break;
-                }
-                lhs = hasil;
+                setState(() {
+                  rhs += value.toString();
+                });
               }
               break;
           }
@@ -97,17 +112,17 @@ class CalculatorButtons extends StatelessWidget {
         CalculatorButton(
             string: "7",
             onPressed: () {
-              callback(Symbol.operand, 7.0);
+              callback(Symbol.operand, '7');
             }),
         CalculatorButton(
             string: "8",
             onPressed: () {
-              callback(Symbol.operand, 8.0);
+              callback(Symbol.operand, '8');
             }),
         CalculatorButton(
             string: "9",
             onPressed: () {
-              callback(Symbol.operand, 9.0);
+              callback(Symbol.operand, '9');
             }),
         CalculatorButton(
             string: "/",
@@ -117,17 +132,17 @@ class CalculatorButtons extends StatelessWidget {
         CalculatorButton(
             string: "4",
             onPressed: () {
-              callback(Symbol.operand, 4.0);
+              callback(Symbol.operand, '4');
             }),
         CalculatorButton(
             string: "5",
             onPressed: () {
-              callback(Symbol.operand, 5.0);
+              callback(Symbol.operand, '5');
             }),
         CalculatorButton(
             string: "6",
             onPressed: () {
-              callback(Symbol.operand, 6.0);
+              callback(Symbol.operand, '6');
             }),
         CalculatorButton(
             string: "x",
@@ -137,33 +152,37 @@ class CalculatorButtons extends StatelessWidget {
         CalculatorButton(
             string: "1",
             onPressed: () {
-              callback(Symbol.operand, 1.0);
+              callback(Symbol.operand, '1');
             }),
         CalculatorButton(
             string: "2",
             onPressed: () {
-              callback(Symbol.operand, 2.0);
+              callback(Symbol.operand, '2');
             }),
         CalculatorButton(
             string: "3",
             onPressed: () {
-              callback(Symbol.operand, 3.0);
+              callback(Symbol.operand, '3');
             }),
         CalculatorButton(
             string: "-",
             onPressed: () {
               callback(Symbol.operator, Operator.kurangi);
             }),
-        const SizedBox.shrink(),
-        CalculatorButton(
-            string: "0",
-            onPressed: () {
-              callback(Symbol.operand, 0.0);
-            }),
         CalculatorButton(
             string: "CE",
             onPressed: () {
               callback(Symbol.operator, Operator.ce);
+            }),
+        CalculatorButton(
+            string: "0",
+            onPressed: () {
+              callback(Symbol.operand, '0');
+            }),
+        CalculatorButton(
+            string: "=",
+            onPressed: () {
+              callback(Symbol.operator, Operator.eq);
             }),
         CalculatorButton(
             string: "+",
