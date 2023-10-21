@@ -178,6 +178,12 @@ class CalculatorButtons extends StatelessWidget {
             onPressed: () {
               callback(Symbol.operator, Operator.tambah);
             }),
+        const SizedBox.shrink(),
+        CalculatorButton(
+            string: ".",
+            onPressed: () {
+              callback(Symbol.operand, '.');
+            }),
       ],
     );
   }
