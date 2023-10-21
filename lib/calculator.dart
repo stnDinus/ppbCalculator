@@ -18,8 +18,15 @@ class _CalculatorState extends State<Calculator> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(children: [
-      CalculatorDisplay(displayValue: hasil),
+    return Column(crossAxisAlignment: CrossAxisAlignment.end, children: [
+      Padding(
+          padding: const EdgeInsets.only(top: 7, bottom: 7),
+          child: Column(children: [
+            Text(lhs, style: Theme.of(context).textTheme.bodySmall),
+            Text(rhs, style: Theme.of(context).textTheme.bodySmall),
+            Text(hasil.toString(),
+                style: Theme.of(context).textTheme.displayLarge)
+          ])),
       CalculatorButtons(
         callback: (Symbol symbol, Object value) {
           setState(() {
@@ -72,17 +79,6 @@ class _CalculatorState extends State<Calculator> {
         },
       )
     ]);
-  }
-}
-
-class CalculatorDisplay extends StatelessWidget {
-  final double displayValue;
-
-  const CalculatorDisplay({super.key, required this.displayValue});
-
-  @override
-  Widget build(BuildContext context) {
-    return Text(displayValue.toString(), style: Theme.of(context).textTheme.displayLarge);
   }
 }
 
