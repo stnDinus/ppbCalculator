@@ -58,7 +58,10 @@ class _CalculatorState extends State<Calculator> {
                       hasil = lhs! + (value as double);
                     });
                     break;
+                  default:
+                    break;
                 }
+                lhs = hasil;
               }
               break;
           }
